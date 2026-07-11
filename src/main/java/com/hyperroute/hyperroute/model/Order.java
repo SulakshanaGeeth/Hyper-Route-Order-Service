@@ -1,6 +1,8 @@
 package com.hyperroute.hyperroute.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+
 import java.time.Instant;
 import java.util.UUID;
 
@@ -9,8 +11,8 @@ import java.util.UUID;
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false)
     private String customerId;
@@ -25,27 +27,40 @@ public class Order {
     @Column(nullable = false)
     private OrderStatus status;
 
-    @Column(nullable = false)
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
     private Instant createdAt;
 
-    // Default constructor for JPA
-    public Order() {}
 
-    public Order(String customerId, double latitude, double longitude) {
-        this.customerId = customerId;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.status = OrderStatus.CREATED;
-        this.createdAt = Instant.now();
+    public Long getId() {
+        return id;
     }
 
-    // Getters and Setters
-    public UUID getId() { return id; }
-    public void setId(UUID id) { this.id = id; }
-    public String getCustomerId() { return customerId; }
-    public double getLatitude() { return latitude; }
-    public double getLongitude() { return longitude; }
-    public OrderStatus getStatus() { return status; }
-    public void setStatus(OrderStatus status) { this.status = status; }
-    public Instant getCreatedAt() { return createdAt; }
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public OrderStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(OrderStatus status) {
+        this.status = status;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
 }
