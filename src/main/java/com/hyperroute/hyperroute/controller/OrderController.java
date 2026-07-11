@@ -1,5 +1,6 @@
 package com.hyperroute.hyperroute.controller;
 
+import com.hyperroute.hyperroute.dto.OrderRequest;
 import com.hyperroute.hyperroute.model.Order;
 import com.hyperroute.hyperroute.service.OrderService;
 import org.springframework.http.HttpStatus;
@@ -20,8 +21,8 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<Order> createOrder(@RequestBody Order request) {
-        Order savedOrder = orderService.createOrder(request);
+    public ResponseEntity<Order> createOrder(@RequestBody OrderRequest request) {
+        Order savedOrder = orderService.placeOrder(request);
         return new ResponseEntity<>(savedOrder, HttpStatus.CREATED);
     }
 }
