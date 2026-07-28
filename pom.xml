@@ -61,6 +61,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-kafka</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.hyperroute</groupId>
+            <artifactId>common-events</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>

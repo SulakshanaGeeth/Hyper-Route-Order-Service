@@ -1,6 +1,6 @@
 package com.hyperroute.hyperroute.service;
 
-import com.hyperroute.hyperroute.dto.OrderCreatedEvent;
+import com.hyperroute.events.OrderCreatedEvent;
 import com.hyperroute.hyperroute.dto.OrderRequest;
 import com.hyperroute.hyperroute.model.Order;
 import com.hyperroute.hyperroute.model.OrderStatus;

@@ -1,6 +1,6 @@
 package com.hyperroute.hyperroute.consumer;
 
-import com.hyperroute.hyperroute.dto.OrderCreatedEvent;
+import com.hyperroute.events.OrderCreatedEvent;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
