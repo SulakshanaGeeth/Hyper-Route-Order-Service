@@ -1,22 +1,158 @@
-version: '3.8'
-
 services:
+
+  # Kafka broker service
   kafka:
+    # Official Apache Kafka Docker image
     image: apache/kafka:latest
+
+    # Custom container name for easier docker commands
     container_name: hyperroute-kafka
+
     ports:
+      # External port:
+      # Used by applications running on your host machine
+      # Example: Spring Boot running from IntelliJ/Eclipse
       - "9092:9092"
+
+      # Internal Docker network port:
+      # Used by other Docker containers like Kafka UI
+      - "29092:29092"
+
     environment:
-      # Configures KRaft mode (no Zookeeper needed)
+
+      # Unique ID of this Kafka broker/controller node
+      # Required for KRaft mode (Kafka without Zookeeper)
       KAFKA_NODE_ID: 1
+
+
+      # Defines Kafka roles
+      # broker    -> stores and serves messages
+      # controller -> manages Kafka metadata (KRaft mode)
       KAFKA_PROCESS_ROLES: 'broker,controller'
-      KAFKA_LISTENERS: 'PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093'
-      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://localhost:9092'
-      KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT'
+
+
+      # Kafka listeners:
+      #
+      # INTERNAL:
+      # - Used by Docker containers
+      # - Kafka UI connects using this listener
+      #
+      # EXTERNAL:
+      # - Used by applications running outside Docker
+      # - Spring Boot connects using localhost:9092
+      #
+      # CONTROLLER:
+      # - Used internally by Kafka for KRaft controller communication
+      KAFKA_LISTENERS: 'INTERNAL://0.0.0.0:29092,EXTERNAL://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093'
+
+
+      # Addresses Kafka gives to clients when they connect.
+      #
+      # Docker containers:
+      #   hyperroute-kafka:29092
+      #
+      # Host applications:
+      #   localhost:9092
+      #
+      # Having two advertised listeners allows both Docker and local apps
+      # to connect to the same Kafka broker.
+      KAFKA_ADVERTISED_LISTENERS: 'INTERNAL://hyperroute-kafka:29092,EXTERNAL://localhost:9092'
+
+
+      # Maps listener names to security protocols.
+      #
+      # INTERNAL -> PLAINTEXT
+      # EXTERNAL -> PLAINTEXT
+      # CONTROLLER -> PLAINTEXT
+      #
+      # For production you would normally use SASL/SSL.
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT'
+
+
+      # Listener Kafka brokers use to communicate with each other.
+      # Since this is a single-node setup, it uses the internal Docker listener.
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+
+
+      # Listener used by the KRaft controller.
+      # Replaces Zookeeper in newer Kafka versions.
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+
+
+      # Defines which server acts as the KRaft controller.
+      #
+      # Format:
+      # node-id@hostname:controller-port
+      #
+      # Single node:
+      # broker/controller ID 1
       KAFKA_CONTROLLER_QUORUM_VOTERS: '1@localhost:9093'
+
+
+      # Replication settings.
+      # Since this is a single Kafka broker:
+      # replication factor must be 1.
+      #
+      # In production with multiple brokers this would be higher.
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+
+      # Transaction log replication factor.
+      # Required for Kafka transactions.
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+
+
+      # Minimum number of in-sync replicas required.
+      # Single broker requires 1.
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+
+
+      # Where Kafka stores topic data inside the container.
+      #
+      # Without a Docker volume:
+      # - Data exists only inside the container
+      # - Deleting container deletes messages
+      #
+      # For permanent storage add a volume.
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+
+
+      # Unique Kafka cluster identifier.
+      # Generated once when creating a KRaft cluster.
       CLUSTER_ID: 'MkU3OEVBNTcwNTJENDM2Qk'
+
+
+  # Kafka web management UI
+  # Allows viewing topics, messages, partitions, consumers, etc.
+  kafka-ui:
+    # Kafka UI Docker image
+    image: provectuslabs/kafka-ui:latest
+
+    # Container name
+    container_name: kafka-ui
+
+    ports:
+      # Open Kafka UI in browser:
+      # http://localhost:8081
+      - "8088:8080"
+
+    environment:
+
+      # Name displayed in Kafka UI
+      KAFKA_CLUSTERS_0_NAME: local
+
+
+      # Kafka connection address.
+      #
+      # IMPORTANT:
+      # Kafka UI runs inside Docker, therefore it cannot use:
+      # localhost:9092
+      #
+      # It must use Docker DNS name:
+      # hyperroute-kafka:29092
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: hyperroute-kafka:29092
+
+
+    # Start Kafka before starting Kafka UI
+    depends_on:
+      - kafka
