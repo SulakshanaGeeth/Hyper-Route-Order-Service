@@ -1,6 +1,6 @@
-package com.hyperroute.hyperroute.repository;
+package com.hyperroute.orderservice.repository;
 
-import com.hyperroute.hyperroute.model.Order;
+import com.hyperroute.orderservice.model.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

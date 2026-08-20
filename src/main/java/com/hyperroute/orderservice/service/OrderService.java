@@ -1,10 +1,10 @@
-package com.hyperroute.hyperroute.service;
+package com.hyperroute.orderservice.service;
 
 import com.hyperroute.events.OrderCreatedEvent;
-import com.hyperroute.hyperroute.dto.OrderRequest;
-import com.hyperroute.hyperroute.model.Order;
-import com.hyperroute.hyperroute.model.OrderStatus;
-import com.hyperroute.hyperroute.repository.OrderRepository;
+import com.hyperroute.orderservice.dto.OrderRequest;
+import com.hyperroute.orderservice.model.Order;
+import com.hyperroute.orderservice.model.OrderStatus;
+import com.hyperroute.orderservice.repository.OrderRepository;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

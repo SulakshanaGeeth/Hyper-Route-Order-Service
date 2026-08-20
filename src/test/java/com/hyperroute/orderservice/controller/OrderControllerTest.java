@@ -1,11 +1,11 @@
-package com.hyperroute.hyperroute.controller;
+package com.hyperroute.orderservice.controller;
 
 
-import com.hyperroute.hyperroute.config.JacksonConfig;
-import com.hyperroute.hyperroute.dto.OrderRequest;
-import com.hyperroute.hyperroute.model.Order;
-import com.hyperroute.hyperroute.model.OrderStatus;
-import com.hyperroute.hyperroute.service.OrderService;
+import com.hyperroute.orderservice.config.JacksonConfig;
+import com.hyperroute.orderservice.dto.OrderRequest;
+import com.hyperroute.orderservice.model.Order;
+import com.hyperroute.orderservice.model.OrderStatus;
+import com.hyperroute.orderservice.service.OrderService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;

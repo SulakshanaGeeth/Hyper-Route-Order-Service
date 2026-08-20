@@ -1,10 +1,10 @@
-package com.hyperroute.hyperroute;
+package com.hyperroute.orderservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class HyperrouteApplicationTests {
+class OrderServiceApplicationTests {
 
 	@Test
 	void contextLoads() {

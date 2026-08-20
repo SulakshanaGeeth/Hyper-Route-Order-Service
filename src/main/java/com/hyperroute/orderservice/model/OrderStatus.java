@@ -1,4 +1,4 @@
-package com.hyperroute.hyperroute.model;
+package com.hyperroute.orderservice.model;
 
 public enum OrderStatus {
     CREATED,

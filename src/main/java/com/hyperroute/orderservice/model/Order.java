@@ -1,4 +1,4 @@
-package com.hyperroute.hyperroute.model;
+package com.hyperroute.orderservice.model;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;

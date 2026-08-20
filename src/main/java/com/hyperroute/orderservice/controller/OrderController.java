@@ -1,8 +1,8 @@
-package com.hyperroute.hyperroute.controller;
+package com.hyperroute.orderservice.controller;
 
-import com.hyperroute.hyperroute.dto.OrderRequest;
-import com.hyperroute.hyperroute.model.Order;
-import com.hyperroute.hyperroute.service.OrderService;
+import com.hyperroute.orderservice.dto.OrderRequest;
+import com.hyperroute.orderservice.model.Order;
+import com.hyperroute.orderservice.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

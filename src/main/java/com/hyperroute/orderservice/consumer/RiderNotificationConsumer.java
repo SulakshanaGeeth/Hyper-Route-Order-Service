@@ -1,4 +1,4 @@
-package com.hyperroute.hyperroute.consumer;
+package com.hyperroute.orderservice.consumer;
 
 import com.hyperroute.events.OrderCreatedEvent;
 import org.springframework.kafka.annotation.KafkaListener;

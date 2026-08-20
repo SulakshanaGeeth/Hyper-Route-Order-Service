@@ -1,4 +1,4 @@
-package com.hyperroute.hyperroute.config;
+package com.hyperroute.orderservice.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
