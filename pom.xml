@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.hyperroute</groupId>
-    <artifactId>hyperroute</artifactId>
+    <artifactId>Order Service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <properties>
         <java.version>25</java.version>
